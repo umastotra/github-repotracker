@@ -3,25 +3,9 @@
 
 import { ApolloServer, gql } from "apollo-server";
 import { PrismaClient } from "@prisma/client";
+const { typeDefs } = require("./schema/typeDefs");
 
 const prisma = new PrismaClient();
-
-const typeDefs = gql`
-  type Repository {
-    id: Int!
-    owner: String!
-    name: String!
-    createdAt: String!
-  }
-
-  type Query {
-    repositories: [Repository!]!
-  }
-
-  type Mutation {
-    addRepository(owner: String!, name: String!): Repository!
-  }
-`;
 
 const resolvers = {
   Query: {

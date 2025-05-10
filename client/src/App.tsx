@@ -14,7 +14,7 @@ function App() {
 
   return (
     <div className="max-w-xl mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-4">Tracked GitHub Repositories</h1>
+      <h1 className="text-2xl font-bold mb-4"> GitHub Repo Tracker (MVP)</h1>
       <ul className="space-y-4">
         {data.getRepositories.map((repo: any) => (
           <li key={repo.id} className="p-4 border rounded shadow-sm bg-white">

@@ -2008,13 +2008,14 @@ export namespace Prisma {
 
   export type RepositoryWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    name_owner?: RepositoryName_ownerCompoundUniqueInput
     AND?: RepositoryWhereInput | RepositoryWhereInput[]
     OR?: RepositoryWhereInput[]
     NOT?: RepositoryWhereInput | RepositoryWhereInput[]
     owner?: StringFilter<"Repository"> | string
     name?: StringFilter<"Repository"> | string
     createdAt?: DateTimeFilter<"Repository"> | Date | string
-  }, "id">
+  }, "id" | "name_owner">
 
   export type RepositoryOrderByWithAggregationInput = {
     id?: SortOrder
@@ -2119,6 +2120,11 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type RepositoryName_ownerCompoundUniqueInput = {
+    owner: string
+    name: string
   }
 
   export type RepositoryCountOrderByAggregateInput = {

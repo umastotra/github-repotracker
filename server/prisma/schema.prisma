@@ -19,4 +19,6 @@ model Repository {
   owner          String
   name           String
   createdAt      DateTime @default(now())
+
+  @@unique([owner, name], name: "name_owner")
 }

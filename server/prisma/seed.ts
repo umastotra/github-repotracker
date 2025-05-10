@@ -5,8 +5,9 @@ const prisma = new PrismaClient();
 async function main() {
   await prisma.repository.createMany({
     data: [
+      { owner: "microsoft", name: "vscode" },
       { owner: "facebook", name: "react" },
-      { owner: "vercel", name: "next.js" },
+      { owner: "githubtraining", name: "github-games" },
     ],
   });
 }

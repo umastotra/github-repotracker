@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useQuery } from "@apollo/client"; // use React hook to run GraphQL queries
 import { GET_REPOSITORIES } from "./graphql";
+import { ReleaseNotesPanel } from "./components/ReleaseNotesPanel";
 
 function App() {
   // Runs GET_REPOSITORIES query as soon as component loads
@@ -41,15 +42,15 @@ function App() {
         </h1>
       </div>
 
-      {/* Main Table */}
-      <div className="flex flex-1">
+      {/* Horizontal layout to have repositories list on left and release notes on right  */}
+      <div className="flex flex-1 overflow-hidden">
         {/* Repo List */}
-        <div className="w-1/2 p-6 space-y-2 overflow-auto">
+        <div className="w-1/2 p-6 space-y-2 overflow-auto border-r">
           {sortedRepos.map((repo: any) => (
             <div
               key={repo.id}
               onClick={() => setSelectedRepo(repo)}
-              className={`cursor-pointer p-3 border rounded hover:bg-gray-100 flex items-center justify-between ${
+              className={`cursor-pointer p-3 border rounded hover:bg-gray-100 flex items-center justify-between transition-all duration-200 ${
                 selectedRepo?.name === repo.name
                   ? "border-2 border-green-500"
                   : "border border-gray-300"
@@ -74,6 +75,9 @@ function App() {
             </div>
           ))}
         </div>
+
+        {/* Side panel with Release Notes for selected repo */}
+        <ReleaseNotesPanel selectedRepo={selectedRepo} />
       </div>
     </div>
   );

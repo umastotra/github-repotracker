@@ -11,6 +11,7 @@ export const GET_REPOSITORIES = gql`
       latestRelease {
         tagName
         publishedAt
+        body
       }
     }
   }

@@ -14,6 +14,7 @@ export async function fetchLatestRelease(owner: string, repo: string) {
       // This is from the octokit gitHub API result
       tagName: res.data.tag_name,
       publishedAt: res.data.published_at,
+      body: res.data.body || "No Release notes available",
     };
   } catch (err: any) {
     // scenario where no release found return null

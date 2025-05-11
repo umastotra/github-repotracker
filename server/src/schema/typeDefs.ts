@@ -5,6 +5,7 @@ export const typeDefs = gql`
   type LatestRelease {
     tagName: String
     publishedAt: String
+    body: String
   }
 
   type Repository {

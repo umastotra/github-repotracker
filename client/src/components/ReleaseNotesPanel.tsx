@@ -1,28 +1,33 @@
+import React from "react";
+
 interface ReleaseNotesPanelProps {
-  selectedRepo: any;
+  selectedRepo: {
+    name: string;
+    latestRelease?: {
+      body?: string;
+    };
+  } | null;
 }
 
 export function ReleaseNotesPanel({ selectedRepo }: ReleaseNotesPanelProps) {
-  if (!selectedRepo) {
-    return (
-      <div className="flex-1 p-6 text-gray-500 text-sm">
-        Select a repository to view release notes.
-      </div>
-    );
-  }
-
   return (
-    <div className="flex-1 p-6 overflow-auto border-l border-gray-300 bg-white">
-      <h2 className="text-xl font-semibold mb-4">
-        {selectedRepo.name} Release Notes
-      </h2>
-      {selectedRepo.latestRelease?.body ? (
-        <pre className="whitespace-pre-wrap text-sm font-mono">
-          {selectedRepo.latestRelease.body}
-        </pre>
-      ) : (
-        <p className="text-gray-500 text-sm">No release notes available.</p>
-      )}
+    <div className="w-1/2 p-6 overflow-auto border border-gray-300 rounded bg-white">
+      <div className="p-6 min-h-full">
+        <div className="border border-gray-300 rounded p-4 bg-white shadow-sm">
+          <h2 className="text-lg font-bold mb-3 text-gray-800">
+            Release Notes
+          </h2>
+          {selectedRepo?.latestRelease?.body ? (
+            <pre className="whitespace-pre-wrap text-sm font-mono text-gray-700">
+              {selectedRepo.latestRelease.body}
+            </pre>
+          ) : (
+            <p className="text-sm text-gray-500 italic">
+              No release notes available.
+            </p>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

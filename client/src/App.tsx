@@ -3,28 +3,31 @@ import { useQuery } from "@apollo/client";
 import { GET_REPOSITORIES } from "./graphql";
 import { RepositoryList } from "./components/RepositoryList";
 import { ReleaseNotesPanel } from "./components/ReleaseNotesPanel";
+import { sortByNewest } from "./utils/sort_utils";
+import { Repository } from "./types/Repository";
 
 function App() {
-  const { data, loading } = useQuery(GET_REPOSITORIES);
+  const { data, loading, error } = useQuery(GET_REPOSITORIES);
   const [selectedRepo, setSelectedRepo] = useState<any>(null);
 
   useEffect(() => {
-    // Runs GET_REPOSITORIES query as soon as data if fetched
+    // Runs GET_REPOSITORIES query as soon as data is fetched
     if (data?.getRepositories?.length && !selectedRepo) {
-      const sorted = [...data.getRepositories].sort(
-        (a, b) =>
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-      );
+      const sorted = sortByNewest(data.getRepositories);
       // Auto select newest repository
       setSelectedRepo(sorted[0]);
     }
   }, [data, selectedRepo]);
 
   if (loading) return <p className="p-4">Loading repositories...</p>;
+  if (error)
+    return (
+      <p className="p-4">
+        Something went wrong - Restart the server and try again
+      </p>
+    );
 
-  const sortedRepos = [...data.getRepositories].sort(
-    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-  );
+  const sortedRepos = sortByNewest<Repository>(data.getRepositories);
 
   return (
     <div className="h-screen flex flex-col">

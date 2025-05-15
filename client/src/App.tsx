@@ -12,12 +12,13 @@ function App() {
 
   useEffect(() => {
     // Runs GET_REPOSITORIES query as soon as data is fetched
-    if (data?.getRepositories?.length && !selectedRepo) {
+    // effect runs once after data loads & sets selectedRepo
+    if (data?.getRepositories?.length) {
       const sorted = sortByNewest(data.getRepositories);
       // Auto select newest repository
       setSelectedRepo(sorted[0]);
     }
-  }, [data, selectedRepo]);
+  }, [data]);
 
   if (loading) return <p className="p-4">Loading repositories...</p>;
   if (error)

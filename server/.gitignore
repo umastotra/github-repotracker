@@ -27,6 +27,4 @@ server/prisma/migrations/*/README.md
 # Server (Node) output
 server/node_modules/
 server/dist/
-server/.env
-
-
+src/generated/

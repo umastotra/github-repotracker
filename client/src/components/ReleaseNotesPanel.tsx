@@ -1,4 +1,5 @@
 import React from "react";
+import DOMPurify from "dompurify";
 
 interface ReleaseNotesPanelProps {
   selectedRepo: {
@@ -10,6 +11,7 @@ interface ReleaseNotesPanelProps {
 }
 
 export function ReleaseNotesPanel({ selectedRepo }: ReleaseNotesPanelProps) {
+  const cleanHTML = DOMPurify.sanitize(selectedRepo?.latestRelease?.body || "");
   return (
     <div className="w-1/2 p-6 overflow-auto border border-gray-300 rounded bg-white">
       <div className="p-6 min-h-full">

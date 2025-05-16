@@ -40,14 +40,14 @@ export const AddRepositoryForm = () => {
           onChange={(e) => setName(e.target.value)}
           className="border p-2 rounded w-1/2"
         />
+        <button
+          type="submit"
+          disabled={loading}
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+        >
+          {loading ? "Adding..." : "Add"}
+        </button>
       </div>
-      <button
-        type="submit"
-        disabled={loading}
-        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-      >
-        {loading ? "Adding..." : "Add Repository"}
-      </button>
       {error && (
         <p className="text-red-500 text-sm">Failed to add repository.</p>
       )}

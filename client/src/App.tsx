@@ -54,15 +54,15 @@ function App() {
         </div>
 
         {/* Search bar */}
-
-        <input
-          type="text"
-          placeholder="Search Repositories"
-          value={searchQuery}
-          className="w-1/2 px-3 py-2 border rounded mb-4"
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-
+        <div className="flex flex-1 gap-x-4 px-4">
+          <input
+            type="text"
+            placeholder="Search Repositories"
+            value={searchQuery}
+            className="w-1/2 px-4 p-4 border py-2 border rounded mb-4"
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
         {/* Panels */}
         <div className="flex flex-1 gap-x-4 px-4 bg-gray-50">
           <RepositoryList

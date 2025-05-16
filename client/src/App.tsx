@@ -10,6 +10,7 @@ import { AddRepositoryForm } from "./components/AddRepositoryForm";
 function App() {
   const { data, loading, error } = useQuery(GET_REPOSITORIES);
   const [selectedRepo, setSelectedRepo] = useState<Repository | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     // Runs GET_REPOSITORIES query as soon as data is fetched
@@ -32,6 +33,9 @@ function App() {
     );
 
   const sortedRepos = sortByNewest<Repository>(data.getRepositories);
+  const filteredRepos = sortedRepos.filter((repo) => {
+    return repo.name.toLowerCase().includes(searchQuery.toLocaleLowerCase());
+  });
 
   return (
     <div className="h-screen flex flex-col">
@@ -49,10 +53,20 @@ function App() {
           <AddRepositoryForm />
         </div>
 
+        {/* Search bar */}
+
+        <input
+          type="text"
+          placeholder="Search Repositories"
+          value={searchQuery}
+          className="w-1/2 px-3 py-2 border rounded mb-4"
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+
         {/* Panels */}
         <div className="flex flex-1 gap-x-4 px-4 bg-gray-50">
           <RepositoryList
-            repositories={sortedRepos}
+            repositories={filteredRepos}
             selectedRepo={selectedRepo}
             onSelect={(selectedRepo) => {
               setSelectedRepo(selectedRepo);

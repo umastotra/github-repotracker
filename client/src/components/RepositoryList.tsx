@@ -1,14 +1,17 @@
 import React from "react";
+import { useMutation } from "@apollo/client";
+import { DELETE_REPOSITORY } from "../graphql";
+import { Repository } from "../types/Repository";
 
-interface Repository {
-  id: string;
-  name: string;
-  createdAt: string;
-  latestRelease?: {
-    tagName: string;
-    publishedAt: string;
-  };
-}
+// interface Repository {
+//   id: string;
+//   name: string;
+//   createdAt: string;
+//   latestRelease?: {
+//     tagName: string;
+//     publishedAt: string;
+//   };
+// }
 
 interface Props {
   repositories: Repository[];
@@ -21,6 +24,15 @@ export function RepositoryList({
   selectedRepo,
   onSelect,
 }: Props) {
+  const [deleteRepo] = useMutation(DELETE_REPOSITORY, {
+    refetchQueries: ["GetRepositories"],
+  });
+
+  const handleDelete = (id: number) => {
+    if (window.confirm("Are you sure you want to delete this repo?")) {
+      deleteRepo({ variables: { id } });
+    }
+  };
   return (
     <div className="w-1/2 p-6 overflow-hidden border border-gray-300 rounded bg-white">
       <h2 className="text-xl font-semibold mb-4 border-b pb-2">Repositories</h2>
@@ -30,7 +42,7 @@ export function RepositoryList({
             key={repo.id}
             onClick={() => onSelect(repo)}
             className={`cursor-pointer p-3 rounded flex items-center justify-between transition-all duration-200 ${
-              selectedRepo?.name === repo.name
+              selectedRepo?.name === repo.name && selectedRepo?.id == repo.id
                 ? "border-2 border-green-600"
                 : "border border-gray-300"
             }`}
@@ -48,6 +60,12 @@ export function RepositoryList({
                 No release
               </div>
             )}
+            <button
+              onClick={() => handleDelete(Number(repo.id))}
+              className="text-red-500 hover:underline text-sm"
+            >
+              X
+            </button>
           </div>
         ))}
       </div>

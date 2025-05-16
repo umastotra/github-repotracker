@@ -10,6 +10,7 @@ export const octokit = new Octokit();
 export async function fetchLatestRelease(owner: string, repo: string) {
   try {
     const res = await octokit.repos.getLatestRelease({ owner, repo });
+    console.log(res);
     return {
       // This is from the octokit gitHub API result
       tagName: res.data.tag_name,

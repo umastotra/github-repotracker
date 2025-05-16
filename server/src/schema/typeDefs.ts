@@ -19,4 +19,9 @@ export const typeDefs = gql`
   type Query {
     getRepositories: [Repository!]!
   }
+
+  type Mutation {
+    addRepository(owner: String!, name: String!): Repository!
+    deleteRepository(id: Int!): Boolean!
+  }
 `;

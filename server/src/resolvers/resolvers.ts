@@ -18,4 +18,22 @@ export const resolvers = {
       return await fetchLatestRelease(repo.owner, repo.name);
     },
   },
+  Mutation: {
+    addRepository: async (_: any, args: { owner: string; name: string }) => {
+      return await prisma.repository.create({
+        data: {
+          owner: args.owner,
+          name: args.name,
+        },
+      });
+    },
+    deleteRepository: async (_: any, args: { id: number }) => {
+      await prisma.repository.delete({
+        where: {
+          id: args.id,
+        },
+      });
+      return true;
+    },
+  },
 };

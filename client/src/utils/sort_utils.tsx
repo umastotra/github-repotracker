@@ -7,7 +7,5 @@
  */
 export function sortByNewest<T extends { createdAt: string }>(array: T[]): T[] {
   // creates a new copy of the array to avoid changing orginal array
-  return [...array].sort(
-    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-  );
+  return [...array].sort((a, b) => Number(b.createdAt) - Number(a.createdAt));
 }

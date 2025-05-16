@@ -5,20 +5,23 @@ import { RepositoryList } from "./components/RepositoryList";
 import { ReleaseNotesPanel } from "./components/ReleaseNotesPanel";
 import { sortByNewest } from "./utils/sort_utils";
 import { Repository } from "./types/Repository";
+import { AddRepositoryForm } from "./components/AddRepositoryForm";
 
 function App() {
   const { data, loading, error } = useQuery(GET_REPOSITORIES);
-  const [selectedRepo, setSelectedRepo] = useState<any>(null);
+  const [selectedRepo, setSelectedRepo] = useState<Repository | null>(null);
 
   useEffect(() => {
     // Runs GET_REPOSITORIES query as soon as data is fetched
     // effect runs once after data loads & sets selectedRepo
-    if (data?.getRepositories?.length) {
+    if (data?.getRepositories?.length && !selectedRepo) {
+      console.log("Repositories from server:", data?.getRepositories);
       const sorted = sortByNewest(data.getRepositories);
+      console.log("Repositories sorted:", sorted);
       // Auto select newest repository
-      setSelectedRepo(sorted[0]);
+      setSelectedRepo(sorted[0] as Repository);
     }
-  }, [data]);
+  }, [data, selectedRepo]);
 
   if (loading) return <p className="p-4">Loading repositories...</p>;
   if (error)
@@ -39,14 +42,24 @@ function App() {
         </h1>
       </div>
 
-      {/* Panels */}
-      <div className="flex flex-1 gap-x-4 px-4 bg-gray-50">
-        <RepositoryList
-          repositories={sortedRepos}
-          selectedRepo={selectedRepo}
-          onSelect={setSelectedRepo}
-        />
-        <ReleaseNotesPanel selectedRepo={selectedRepo} />
+      {/* Page wrapper */}
+      <div className="flex flex-col h-screen">
+        {/* 🔍 Search input (on top) */}
+        <div className="px-4 pt-4">
+          <AddRepositoryForm />
+        </div>
+
+        {/* Panels */}
+        <div className="flex flex-1 gap-x-4 px-4 bg-gray-50">
+          <RepositoryList
+            repositories={sortedRepos}
+            selectedRepo={selectedRepo}
+            onSelect={(selectedRepo) => {
+              setSelectedRepo(selectedRepo);
+            }}
+          />
+          <ReleaseNotesPanel selectedRepo={selectedRepo} />
+        </div>
       </div>
     </div>
   );

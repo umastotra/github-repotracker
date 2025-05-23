@@ -1,6 +1,8 @@
 # GitHub Repo Tracker – MVP
 
 A full-stack web application to track GitHub repositories and view their latest release activity.
+![Github Repo Tracker](https://github.com/user-attachments/assets/53c9967a-1753-4483-9411-6602bfef9545)
+
 
 ---
 
